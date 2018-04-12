@@ -52,6 +52,9 @@ and call `.validate()` and both `name` and `title` are not populated validateion
 fail.
 
 ### Non-Domain Validation Inheritance
+Note: It is not possible for non-domains to implement `GormValidateable` it is smart enough
+to recognize attempts to apply that to non-domains and will complain.
+
 ##### Unit Testing
 There is weirdness around how `Validateable` is inherited in unit tests. When executing
 unit tests `.validate()` only works on classes that directly `implement Validateable`.
