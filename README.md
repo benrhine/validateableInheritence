@@ -64,10 +64,14 @@ will throw an error.
 ``` 
 groovy.lang.MissingMethodException: No signature of method: grails334.command.ExtendedCommand.findConstraintsEvaluator() is applicable for argument types: () values: []
 ```
-
-This error occurs because when it attempts to call the `findConstraintsEvaluator()` method
+Initially I thought this 
+error occurs because when it attempts to call the `findConstraintsEvaluator()` method
 this requires the Holders object contain the `applicationContext` which is not available
-during unit testing.
+during unit testing. But on further inspection in comparing the inherited case vs the 
+workaround case, it actually appears that when inherited, even though it throws the above
+error that it is actually some kind of invocation error as it never reaches
+`findConstraintsEvaluator()` but when using the workaround, even though applicationContext
+is still not available it returns a default constraint evaluator.
 
 ###### Demo of the error
 `ExtendedPersonTwoSpec` and `CommandSpec` each have 2 failing tests which show this
