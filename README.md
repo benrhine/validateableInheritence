@@ -76,15 +76,29 @@ is still not available it returns a default constraint evaluator.
 ###### Demo of the error
 `ExtendedPersonTwoSpec` and `CommandSpec` each have 2 failing tests which show this
 
-###### Workaround
+###### Workaround 1
 Whether or not this is the correct fix or is really necessary since this seems to only 
 pertain to unit testing is for child classes to additionally `implement Validateable`.
 This somehow allows unit tests to complete in the manner you would expect without them
 throwing the above error.
 
-###### Demo of the workaround
+###### Demo of the workaround 1
 `ExtendedPersonOneSpec` shows that when the child domain `implements Validateable` that
 tests will pass.
+
+###### Workaround 2
+In unit tests of Child objects apply the following setup
+```
+void setup() {
+    Object.metaClass.dummy = {}
+}
+```
+This workaround is referenced in the original issue https://github.com/grails/grails-core/issues/10901
+but not sure how this solution was hit on or why it works.
+
+###### Workaround 3
+There are additional tests which are commented out in `ExtendedPersonTwoSpec` and
+`CommandSpec` which avoid the error altogether by mocking the domain object.
 
 ##### Integration Testing
 `Validateable` inheritance seems to work as expected when it comes to integration testing
